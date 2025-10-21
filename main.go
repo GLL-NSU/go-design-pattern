@@ -1,8 +1,9 @@
 package main
 
 import (
-	"go-design-pattern/create/factory"
-	"go-design-pattern/create/singleton"
+	"go-design-pattern/creational/factory"
+	"go-design-pattern/creational/singleton"
+	"go-design-pattern/structural"
 )
 
 func main() {
@@ -14,5 +15,7 @@ func main() {
 	factory.UseAbstractFactoryPattern()
 	// 单例模式
 	singleton.UseSingletonPattern()
+	// 代理模式
+	structural.UseProxy()
 
 }

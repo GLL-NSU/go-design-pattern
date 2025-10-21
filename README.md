@@ -1,31 +1,41 @@
 # go-design-pattern
 常用设计模式在 Golang 中的简单实现与示例
 
+## 目录
+- [项目简介](#项目简介)
+- [目录结构](#目录结构)
+- [运行环境](#运行环境)
+- [快速开始](#快速开始)
+- [设计模式简述](#设计模式简述)
+
 ## 项目简介
-该项目以简洁示例演示 Go 语言中的常见创建型设计模式：
+该项目以简洁示例演示 Go 语言中的常见设计模式：
 - 简单工厂（Simple Factory）
 - 工厂方法（Factory Method）
 - 抽象工厂（Abstract Factory）
 - 单例（Singleton）：饿汉式、懒汉式、加锁版、原子版、sync.Once 版
+- 代理（Proxy）
 
 通过 `main.go` 一次性运行所有示例，便于快速理解不同模式的意图、结构与使用方式。
 
 ## 目录结构
 ```
 go-design-pattern
-└── create
-    ├── factory
-    │   ├── simple_factory_patterns.go           # 简单工厂
-    │   ├── factory_method_patterns.go           # 工厂方法
-    │   └── abstract_factory_patterns.go         # 抽象工厂
-    └── singleton
-        ├── singleton.go                         # 单例模式统一入口
-        ├── eager_initialization.go              # 饿汉式
-        ├── lazy_initialization.go               # 懒汉式（非线程安全基础版）
-        ├── lazy_initialization_with_lock.go     # 懒汉式（互斥锁版）
-        ├── lazy_initialization_with_atomic.go   # 懒汉式（原子操作版）
-        └── lazy_initialization_with_once.go     # 懒汉式（sync.Once 高性能版）
-main.go
+├── creational
+│   ├── factory
+│   │   ├── simple_factory_patterns.go           # 简单工厂
+│   │   ├── factory_method_patterns.go           # 工厂方法
+│   │   └── abstract_factory_patterns.go         # 抽象工厂
+│   └── singleton
+│       ├── singleton.go                         # 单例模式统一入口
+│       ├── eager_initialization.go              # 饿汉式
+│       ├── lazy_initialization.go               # 懒汉式（非线程安全基础版）
+│       ├── lazy_initialization_with_lock.go     # 懒汉式（互斥锁版）
+│       ├── lazy_initialization_with_atomic.go   # 懒汉式（原子操作版）
+│       └── lazy_initialization_with_once.go     # 懒汉式（sync.Once 高性能版）
+├── structural
+│   └── proxy_pattern.go                         # 代理模式
+└── main.go
 ```
 
 ## 运行环境
@@ -60,7 +70,7 @@ main.go
   - 定义一组相关或依赖的产品族创建接口（如 `CreateApple`、`CreateOrange`），由具体工厂（如 `CNFactory`、`USFactory`）生成同一产品族对象。
   - 适用：需要在多个产品族之间切换，且保证族内产品协同与兼容。
   - 优点：保证产品族一致性与兼容性；切换产品族（如地区/平台）成本低；集中管理多产品的创建。
-  - 缺点：对“新增产品类型”不友好（需改抽象接口与所有具体工厂）；结构更复杂，学习与维护成本更高。
+  - 缺点：对"新增产品类型"不友好（需改抽象接口与所有具体工厂）；结构更复杂，学习与维护成本更高。
 
 - 单例模式
   - 饿汉式：启动时直接实例化。
@@ -78,3 +88,9 @@ main.go
   - sync.Once 版：使用标准库一次性初始化。
     - 优点：高性能、语义清晰、避免双检锁陷阱。
     - 缺点：只支持一次初始化，复位困难；在测试中需特别处理全局状态。
+
+- 代理模式
+  - 为其他对象提供一种代理以控制对这个对象的访问。在本示例中，ProxyShopping 作为代理，控制对 ChinaShopping 的访问。
+  - 适用：需要在访问对象时增加额外的控制逻辑，如权限检查、延迟加载、日志记录等。
+  - 优点：可以在客户端和目标对象之间起到中介作用，并且可以通过代理对象增加额外的功能；遵循开闭原则。
+  - 缺点：增加了系统的复杂度，可能会影响请求的处理速度。
