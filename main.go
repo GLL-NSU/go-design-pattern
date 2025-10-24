@@ -17,5 +17,7 @@ func main() {
 	singleton.UseSingletonPattern()
 	// 代理模式
 	structural.UseProxy()
+	// 装饰器模式
+	structural.UseDecorator()
 
 }
